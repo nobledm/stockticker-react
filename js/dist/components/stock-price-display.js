@@ -12,6 +12,8 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+import { StockHistory } from './stock-history.js';
+
 var PriceDisplay = function PriceDisplay(props) {
   var stock = props.stock;
 
@@ -41,15 +43,26 @@ var PriceDisplay = function PriceDisplay(props) {
     });
   };
 
+  var handleHistory = function handleHistory(e) {
+    if (!stockData.history) {
+      stock.getStockFiveDayHistory().then(function (data) {
+        return setStockData(_objectSpread({}, stock.stockData));
+      });
+    }
+  };
+
   return React.createElement("div", null, stockData.symbol ? React.createElement(React.Fragment, null, React.createElement("h2", null, stockData.symbol), React.createElement("p", {
     className: "details"
   }, "Date: ", stockData.date), React.createElement("p", {
     className: "details"
   }, "Price: ", currency(stockData.price)), React.createElement("button", {
-    className: "btn-history"
-  }, "Previous 5 Days"), React.createElement("div", {
+    className: "btn-history",
+    onClick: handleHistory
+  }, "Previous 5 Days"), stockData.history && React.createElement("div", {
     className: "history"
-  })) : React.createElement(React.Fragment, null, React.createElement("p", null, "No Stock data received"), stockData.error && React.createElement("p", null, stockData.error)));
+  }, React.createElement(StockHistory, {
+    history: stockData.history
+  }))) : React.createElement(React.Fragment, null, React.createElement("p", null, "No Stock data received"), stockData.error && React.createElement("p", null, stockData.error)));
 };
 
 export { PriceDisplay };
