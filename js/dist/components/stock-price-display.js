@@ -12,10 +12,11 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-import { StockHistory } from './stock-history.js';
+import { StockHistory } from "./stock-history.js";
 
 var PriceDisplay = function PriceDisplay(props) {
-  var stock = props.stock;
+  var stock = props.stock,
+      liftStock = props.liftStock;
 
   var _React$useState = React.useState({}),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -35,11 +36,16 @@ var PriceDisplay = function PriceDisplay(props) {
       });
     }
   }, [props.stock]);
+  React.useEffect(function () {
+    if (stockData.symbol) {
+      liftStock(stockData);
+    }
+  }, [props.stock.symbol]);
 
   var currency = function currency(value) {
-    return (+value).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD'
+    return (+value).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
     });
   };
 
