@@ -1,6 +1,6 @@
+import { Stock } from "../stock.js";
 import { StockSearchForm } from "./stock-search-form.js";
 import { PriceDisplay } from "./stock-price-display.js";
-import { Stock } from "../stock.js";
 import { RecentHistory } from "./recent-history.js";
 
 const App = () => {
@@ -33,7 +33,7 @@ const App = () => {
     }
   };
 
-  const handleReview = stock => {
+  const reviewStock = stock => {
     updateHistory(
       recentHistory.filter(keepStock => keepStock.symbol !== stock.symbol)
     );
@@ -55,10 +55,8 @@ const App = () => {
     <React.Fragment>
       <h1>Stock Ticker App</h1>
       <StockSearchForm submitCallback={setSymbol} />
-
       <PriceDisplay stockData={stockData} get5DayHistory={get5DayHistory} />
-
-      <RecentHistory recentStocks={recentHistory} handleReview={handleReview} />
+      <RecentHistory recentStocks={recentHistory} reviewStock={reviewStock} />
     </React.Fragment>
   );
 };

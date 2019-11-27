@@ -1,3 +1,4 @@
+import { Currency } from "./helper.js";
 import { StockHistory } from "./stock-history.js";
 
 const PriceDisplay = props => {
@@ -9,7 +10,7 @@ const PriceDisplay = props => {
         <React.Fragment>
           <h2>{stockData.symbol}</h2>
           <p className="details">Date: {stockData.date}</p>
-          <p className="details">Price: {stockData.price}</p>
+          <p className="details">Price: {Currency(stockData.price)}</p>
           <button className="btn-history" onClick={get5DayHistory}>
             Previous 5 Days
           </button>

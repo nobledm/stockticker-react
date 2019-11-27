@@ -1,5 +1,7 @@
+import { Currency } from "./helper.js";
+
 const RecentHistory = props => {
-  const { recentStocks, handleReview } = props;
+  const { recentStocks, reviewStock } = props;
   const prevFive = recentStocks.slice(-5, -1);
 
   return (
@@ -9,8 +11,8 @@ const RecentHistory = props => {
       {prevFive.length > 0 && (
         <ul>
           {prevFive.map(stock => (
-            <li key={stock.symbol} onClick={() => handleReview(stock)}>
-              {stock.symbol}: {stock.price}
+            <li key={stock.symbol} onClick={() => reviewStock(stock)}>
+              {stock.symbol}: {Currency(stock.price)}
             </li>
           ))}
         </ul>

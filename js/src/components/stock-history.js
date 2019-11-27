@@ -1,3 +1,5 @@
+import { Currency } from "./helper.js";
+
 const StockHistory = props => {
   return (
     <React.Fragment>
@@ -5,8 +7,8 @@ const StockHistory = props => {
         <div className="day-details" key={day.date}>
           <div className="date">Date: {day.date}</div>
           <div className="details">
-            Open: {day.open}, High: {day.high}, Low: {day.low}, Close:{" "}
-            {day.close},
+            Open: {Currency(day.open)}, High: {Currency(day.high)}, Low:{" "}
+            {Currency(day.low)}, Close: {Currency(day.close)},
           </div>
         </div>
       ))}
