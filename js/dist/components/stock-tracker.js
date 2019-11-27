@@ -6,29 +6,44 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+import { Currency } from "./helper.js";
+import { PriceDisplay } from "./stock-price-display.js";
+
 var StockTracker = function StockTracker(props) {
   var checkStock = props.checkStock;
 
   var _React$useState = React.useState([]),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       recentStocks = _React$useState2[0],
-      addNewStock = _React$useState2[1];
+      setRecentStocks = _React$useState2[1];
 
   React.useEffect(function () {
     if (checkStock.symbol && !recentStocks.some(function (stock) {
       return stock.symbol === checkStock.symbol;
     })) {
-      if (recentStocks.length > 5) {
-        recentStocks.shift();
-      }
-
-      addNewStock(recentStocks.concat(checkStock));
+      // if (recentStocks.length == 5) {
+      //   recentStocks.shift();
+      // }
+      setRecentStocks(recentStocks.concat(checkStock));
     }
   }, [props.checkStock]);
+
+  var handleReview = function handleReview(oldStock) {
+    setRecentStocks(recentStocks.filter(function (keepStock) {
+      return keepStock.symbol !== oldStock.symbol;
+    }));
+    return React.createElement(PriceDisplay, {
+      stock: oldStock
+    });
+  };
+
   return React.createElement(React.Fragment, null, React.createElement("h2", null, "Recent"), recentStocks.length > 0 && React.createElement("ul", null, recentStocks.map(function (stock) {
     return React.createElement("li", {
-      key: stock.symbol
-    }, stock.symbol, ": ", stock.price);
+      key: stock.symbol,
+      onClick: function onClick() {
+        return handleReview(stock);
+      }
+    }, stock.symbol, ": ", Currency(stock.price));
   })));
 };
 

@@ -12,6 +12,7 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+import { Currency } from "./helper.js";
 import { StockHistory } from "./stock-history.js";
 
 var PriceDisplay = function PriceDisplay(props) {
@@ -42,13 +43,6 @@ var PriceDisplay = function PriceDisplay(props) {
     }
   }, [props.stock.symbol]);
 
-  var currency = function currency(value) {
-    return (+value).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD"
-    });
-  };
-
   var handleHistory = function handleHistory(e) {
     if (!stockData.history) {
       stock.getStockFiveDayHistory().then(function (data) {
@@ -61,7 +55,7 @@ var PriceDisplay = function PriceDisplay(props) {
     className: "details"
   }, "Date: ", stockData.date), React.createElement("p", {
     className: "details"
-  }, "Price: ", currency(stockData.price)), React.createElement("button", {
+  }, "Price: ", Currency(stockData.price)), React.createElement("button", {
     className: "btn-history",
     onClick: handleHistory
   }, "Previous 5 Days"), stockData.history && React.createElement("div", {

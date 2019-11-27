@@ -1,3 +1,5 @@
+import { Currency } from "./helper.js";
+
 var StockHistory = function StockHistory(props) {
   return React.createElement(React.Fragment, null, props.history.map(function (day) {
     return React.createElement("div", {
@@ -7,7 +9,7 @@ var StockHistory = function StockHistory(props) {
       className: "date"
     }, "Date: ", day.date), React.createElement("div", {
       className: "details"
-    }, "Open: ", day.open, ", High: ", day.high, ", Low: ", day.low, ", Close: ", day.close, ","));
+    }, "Open: ", Currency(day.open), ", High: ", Currency(day.high), ", Low:", " ", Currency(day.low), ", Close: ", Currency(day.close), ","));
   }));
 };
 
